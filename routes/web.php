@@ -32,3 +32,4 @@ Route::get('/test',function(){return "goodbye!";});
 Route::get("ShowRoomsController");
 Route::get('/rooms/{roomType?}', 'App\Http\Controllers\ShowRoomsController');
 Route::resource('/bookings','\App\Http\Controllers\BookingController');
+Route::resource('/room_types','\App\Http\Controllers\roomTypeController');

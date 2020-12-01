@@ -87,9 +87,21 @@ class BookingController extends Controller
      */
     public function update(Request $request, Booking $booking)
     {
+        $validateData = $request->validate([
+            'start' => 'required|date',
+            'end' => 'required|date',
+            'room_id' => 'required|exists:rooms,id',
+            'user_id' => 'required|exists:users,id',
+            'is_paid' => 'nullable',
+            'notes' => 'present',
+            'start' => 'required',
+            'is_reservation' => 'required',
+
+
+        ]);
         $booking->fill($request->input());
         $booking->save();
-        $booking->users()->sync([$request->input('user_id')]);
+        $booking->users()->sync([$validateData['user_id']]);
         return redirect()->action([BookingController::class, 'index']);    
     }
 
