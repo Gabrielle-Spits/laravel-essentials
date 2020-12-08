@@ -94,12 +94,15 @@ class BookingController extends Controller
             'user_id' => 'required|exists:users,id',
             'is_paid' => 'nullable',
             'notes' => 'present',
-            'start' => 'required',
             'is_reservation' => 'required',
-
-
         ]);
-        $booking->fill($request->input());
+        if(isset($validateData["is_paid"]))
+        {
+            $validateData["is_paid"] = 1;
+        } else{
+            $validateData["is_paid"] = 0;
+        }
+        $booking->fill($validateData);
         $booking->save();
         $booking->users()->sync([$validateData['user_id']]);
         return redirect()->action([BookingController::class, 'index']);    
