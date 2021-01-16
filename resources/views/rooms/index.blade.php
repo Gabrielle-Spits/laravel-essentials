@@ -9,7 +9,7 @@
                 Room Number
             </th>
             <Th>
-                tyoe
+                Type
             </Th>
         </tr>
     </thead>

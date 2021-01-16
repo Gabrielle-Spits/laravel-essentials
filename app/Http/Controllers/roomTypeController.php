@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\roomType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class roomTypeController extends Controller
 {
@@ -14,6 +15,7 @@ class roomTypeController extends Controller
      */
     public function index()
     {
+        Cache::get('key');
         return view('roomTypes.index')->with('roomTypes', RoomType::paginate());
     }
 
