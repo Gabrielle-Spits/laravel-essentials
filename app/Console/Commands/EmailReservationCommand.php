@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Libraries\Notifications;
+use App\Notifications\Reservation;
 
 class EmailReservationCommand extends Command
 {
@@ -57,18 +58,22 @@ class EmailReservationCommand extends Command
 
         foreach($bookings as $booking)
         {
-            if($this->option('dry-run')){
-                $this->info('would process booking');
-            }else{
-                $this->notify->send();
-                // Notifications::send();
-            }
-           
+            $this->processBooking($booking);
             $bar->advance();
             $bar->display();
         }
             $bar->finish();
             $this->comment("Command complete");
             return 0;
+    }
+
+    public function processBooking($booking)
+    {
+        if($this->option('dry-run'))
+        {
+            $this->info('would process booking');
+        }else{
+            $booking->notify(new Reservation('Isa Spits'));
+        }
     }
 }

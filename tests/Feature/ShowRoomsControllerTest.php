@@ -7,6 +7,8 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\RoomType;
 use App\Models\Room;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 
 class ShowRoomsControllerTest extends TestCase
 {
@@ -39,6 +41,21 @@ class ShowRoomsControllerTest extends TestCase
         ->assertViewIs('rooms.index')
         ->assertViewHas('rooms')
         ->assertSeeText($roomType->name);
+
+    }
+
+    public function testUpdateFile()
+    {
+        $file = UploadedFile::fake()->image('sample.jpg');
+        $roomType = RoomType::factory()->create();
+
+        $response = $this->put("/room_types/{$roomType->id}",
+        ['picture' => $file]
+        );
+
+        $response->assertStatus(302)
+        ->assertRedirect('/room_types');
+        Storage::disk('public')->assertExists($file->hashName());
 
     }
 }

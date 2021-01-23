@@ -6,8 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Room; 
-use Illuminate\Http\UploadFile;
-use Illuminate\Support\Facades\Storage;
+
 
 
 class ShowRoomsController extends Controller
